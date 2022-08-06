@@ -1,4 +1,4 @@
-# AirBnB Clone [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Abayie/AirBnB_clone/blob/main/LICENSE) [![Build Status](https://travis-ci.org/Abayie/AirBnB_clone.svg?branch=main)](https://travis-ci.org/Abayie/AirBnB_clone)
+# AirBnB Clone [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Abayie/AirBnB_clone/main/LICENSE) 
 ![HBnB Logo](./image/hbnb_logo.png)
 
 
