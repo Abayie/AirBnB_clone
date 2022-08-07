@@ -1,52 +1,31 @@
-#!/usr/bin/env python3
-"""Test model for Amenity class"""
+#!/usr/bin/python3
+"""test module for class Amenity"""
 
+import models
+import datetime
 import unittest
-import os
-from models.amenity import Amenity
-from models.base_model import BaseModel
-import uuid
 
 
-class TestAmenity(unittest.TestCase):
-    """Amenity model class test case"""
+class AmenityTest(unittest.TestCase):
+    """tests the class Amenity"""
 
-    @classmethod
-    def setUpClass(cls):
-        """Setup the unittest"""
-        cls.amenity = Amenity()
-        cls.amenity.name = "Wifi"
+    def test_documentation(self):
+        """tests module and class docstring"""
+        self.assertIsNotNone(models.amenity.__doc__)
+        self.assertIsNotNone(models.amenity.Amenity.__doc__)
 
-    @classmethod
-    def tearDownClass(cls):
-        """Clean up the dirt"""
-        del cls.amenity
-        try:
-            os.remove("file.json")
-        except FileNotFoundError:
-            pass
+    def test_class(self):
+        """test instance class"""
+        instance = models.amenity.Amenity()
+        self.assertIsInstance(instance, models.amenity.Amenity)
 
-    def test_is_subclass(self):
-        self.assertTrue(issubclass(self.amenity.__class__, BaseModel))
-
-    def checking_for_doc(self):
-        self.assertIsNotNone(Amenity.__doc__)
-
-    def test_has_attributes(self):
-        self.assertTrue('id' in self.amenity.__dict__)
-        self.assertTrue('created_at' in self.amenity.__dict__)
-        self.assertTrue('updated_at' in self.amenity.__dict__)
-        self.assertTrue('name' in self.amenity.__dict__)
-
-    def test_attributes_are_string(self):
-        self.assertIs(type(self.amenity.name), str)
-
-    def test_save(self):
-        self.amenity.save()
-        self.assertNotEqual(self.amenity.created_at, self.amenity.updated_at)
-
-    def test_to_dict(self):
-        self.assertTrue('to_dict' in dir(self.amenity))
+    def test_type(self):
+        """test type of instance atributes"""
+        instance = models.amenity.Amenity()
+        self.assertIsInstance(instance.id, str)
+        self.assertIsInstance(instance.created_at, datetime.datetime)
+        self.assertIsInstance(instance.updated_at, datetime.datetime)
+        self.assertIsInstance(instance.name, str)
 
 
 if __name__ == "__main__":

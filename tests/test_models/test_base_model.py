@@ -1,114 +1,65 @@
 #!/usr/bin/python3
-# test_base_model.py
-"""Defines unittests for base_model.py.
+"""test module for class BaseModel"""
 
-Unittest classes:
-    TestBaseModel_Instantiation - line 15
-    TestBase_Instance_Print - line 51
-    TestBase_Save_Method - line 59
-    TestBase_from_json_string - line 234
-"""
-from datetime import datetime, timezone
+import models
+import datetime
 import unittest
-from models.base_model import BaseModel
 
 
-class TestBaseModel_Instantiation(unittest.TestCase):
-    """Unittests for testing instantiation of the BaseModel class."""
+class BaseModelTest(unittest.TestCase):
+    """tests the class BaseModel"""
 
-    def test_IsInstanceOf(self):
-        """Test instance"""
-        b1 = BaseModel()
-        self.assertIsInstance(b1, BaseModel)
+    def test_documentation(self):
+        """tests module, class and methods docstring"""
+        self.assertIsNotNone(models.base_model.__doc__)
+        self.assertIsNotNone(models.base_model.BaseModel.__doc__)
+        self.assertIsNotNone(models.base_model.BaseModel.__str__.__doc__)
+        self.assertIsNotNone(models.base_model.BaseModel.save.__doc__)
+        self.assertIsNotNone(models.base_model.BaseModel.to_dict.__doc__)
 
-    def test_ContainsId(self):
-        """Test if id attribute exists"""
-        b1 = BaseModel()
-        self.assertTrue(hasattr(b1, "id"))
+    def test_class(self):
+        """test instance class"""
+        instance = models.base_model.BaseModel()
+        self.assertIsInstance(instance, models.base_model.BaseModel)
 
-    def test_IdType(self):
-        """Test if `id` attribute type"""
-        b1 = BaseModel()
-        self.assertEqual(type(b1.id), str)
+    def test_type(self):
+        """test type of instance atributes"""
+        instance = models.base_model.BaseModel()
+        self.assertIsInstance(instance.id, str)
+        self.assertIsInstance(instance.created_at, datetime.datetime)
+        self.assertIsInstance(instance.updated_at, datetime.datetime)
 
-    def test_CompareTwoInstancesId(self):
-        """Compare distinct instances ids"""
-        b1 = BaseModel()
-        b2 = BaseModel()
-        self.assertNotEqual(b1.id, b2.id)
+    def test_init(self):
+        """test type of instance atributes"""
+        instance = models.base_model.BaseModel()
+        instance.name = "Pichu"
+        instance.number = 98
+        self.assertIsInstance(instance.id, str)
+        self.assertIsInstance(instance.created_at, datetime.datetime)
+        self.assertIsInstance(instance.updated_at, datetime.datetime)
+        self.assertIsInstance(instance.name, str)
+        self.assertIsInstance(instance.number, int)
 
-    def test_ContainsCreated_at(self):
-        """Checks `created_at` attribute existence"""
-        b1 = BaseModel()
-        self.assertTrue(hasattr(b1, "created_at"))
+    def test_str(self):
+        """test __str__ method"""
+        instance = models.base_model.BaseModel()
+        string = "[BaseModel] ({}) {}".format(instance.id, instance.__dict__)
+        self.assertEqual(string, str(instance))
 
-    def test_Created_atInstance(self):
-        """Checks `created_at` attribute's type"""
-        b1 = BaseModel()
-        self.assertIsInstance(b1.created_at, datetime)
+    def test_save(self):
+        """test save method"""
+        instance = models.base_model.BaseModel()
+        date = instance.updated_at
+        instance.save()
+        self.assertLess(date, instance.updated_at)
 
-    def test_ContainsUpdated_at(self):
-        """Checks `updated_at` attribute existence"""
-        b1 = BaseModel()
-        self.assertTrue(hasattr(b1, "updated_at"))
-
-    def test_Updated_atInstance(self):
-        """Check `updated_at` attribute type"""
-        b1 = BaseModel()
-        self.assertIsInstance(b1.updated_at, datetime)
-
-
-class TestBaseModel_Instance_Print(unittest.TestCase):
-    """Unittest for testing the return value of __str__ method."""
-
-    def test_str_return(self):
-        b1 = BaseModel()
-        ret = "[{}] ({}) {}".format("BaseModel", b1.id, str(b1.__dict__))
-        self.assertEqual(str(b1), ret)
-
-
-class TestBaseModel_Save_Method(unittest.TestCase):
-    """Unittest for testing the save method."""
-
-    def test_validates_save(self):
-        """Check save models"""
-        b1 = BaseModel()
-        updated_at_1 = b1.updated_at
-        b1.save()
-        updated_at_2 = b1.updated_at
-        self.assertNotEqual(updated_at_1, updated_at_2)
-
-
-class TestBaseModel_to_Dict_Method(unittest.TestCase):
-    """Unittest for testing the to_dict method."""
-
-    def test_className_present(self):
-        """Test className present"""
-        b1 = BaseModel()
-        dic = b1.to_dict()
-        self.assertNotEqual(dic, b1.__dict__)
-
-    def test_attribute_ISO_format(self):
-        """Test datetime field isoformated"""
-        b1 = BaseModel()
-        dic = b1.to_dict()
-        self.assertEqual(type(dic['created_at']), str)
-        self.assertEqual(type(dic['updated_at']), str)
-
-
-class TestBaseModel_Kwargs(unittest.TestCase):
-    """Unittest for instantiating BaseModel from kwargs"""
-
-    def test_recreate(self):
-        """Test BaseModel instantiation from kwargs"""
-        b1 = BaseModel()
-        b1.my_number = 89
-
-        b2 = BaseModel(**b1.to_dict())
-        self.assertEqual(b1.id, b2.id)
-        self.assertEqual(b1.my_number, b2.my_number)
-        self.assertEqual(b2.created_at.isoformat(), b2.created_at.isoformat())
-        self.assertEqual(b1.updated_at.isoformat(), b2.updated_at.isoformat())
+    def test_to_dict(self):
+        """test to_dict method"""
+        instance = models.base_model.BaseModel()
+        dictionary  = instance.to_dict()
+        self.assertIsInstance(dictionary, dict)
+        self.assertEqual(instance.__class__.__name__, dictionary["__class__"])
+        self.assertEqual(instance.id, dictionary["id"])
 
 
 if __name__ == "__main__":
