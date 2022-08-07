@@ -1,9 +1,14 @@
-#!/usr/bin/env python3
-"""`State` class module"""
+#!/usr/bin/python3
+"""module of 'State' class"""
 
-from .base_model import BaseModel
+from models.base_model import BaseModel
 
 
 class State(BaseModel):
-    """A class that represent a state"""
+    """class 'State' that inherits from BaseModel"""
+
     name = ""
+
+    def __init__(self, *args, **kwargs):
+        """class constructor"""
+        super().__init__(*args, **kwargs)

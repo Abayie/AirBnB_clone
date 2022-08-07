@@ -1,11 +1,12 @@
-#!/usr/bin/env python3
-"""`Place` class module"""
+#!/usr/bin/python3
+"""module of 'Place' class"""
 
-from .base_model import BaseModel
+from models.base_model import BaseModel
 
 
 class Place(BaseModel):
-    """A class that represent a place"""
+    """class 'Place' that inherits from BaseModel"""
+
     city_id = ""
     user_id = ""
     name = ""
@@ -17,3 +18,7 @@ class Place(BaseModel):
     latitude = 0.0
     longitude = 0.0
     amenity_ids = []
+
+    def __init__(self, *args, **kwargs):
+        """class constructor"""
+        super().__init__(*args, **kwargs)

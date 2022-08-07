@@ -1,10 +1,15 @@
-#!/usr/bin/env python3
-"""`City` class module"""
+#!/usr/bin/python3
+"""module of 'City' class"""
 
-from .base_model import BaseModel
+from models.base_model import BaseModel
 
 
 class City(BaseModel):
-    """A class that represent a city"""
+    """class 'City' that inherits from BaseModel"""
+
     state_id = ""
     name = ""
+
+    def __init__(self, *args, **kwargs):
+        """class constructor"""
+        super().__init__(*args, **kwargs)
